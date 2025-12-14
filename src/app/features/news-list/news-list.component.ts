@@ -23,6 +23,7 @@ export class NewsListComponent implements OnInit {
   pageSize: number = 12;
   totalResults: number = 0;
   searchQuery: string = "";
+  private readonly DEFAULT_IMAGE_URL = "assets/placeholder.svg";
 
   private newsService = inject(NewsService);
   private route = inject(ActivatedRoute);
@@ -115,11 +116,14 @@ export class NewsListComponent implements OnInit {
   }
 
   getImageUrl(url: string | null): string {
-    return url || "assets/placeholder.svg";
+    return url || this.DEFAULT_IMAGE_URL;
   }
 
   onImageError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
-    imgElement.src = "assets/placeholder.svg";
+    // Prevent infinite loop by checking if already set to placeholder
+    if (imgElement.src.indexOf(this.DEFAULT_IMAGE_URL) === -1) {
+      imgElement.src = this.DEFAULT_IMAGE_URL;
+    }
   }
 }

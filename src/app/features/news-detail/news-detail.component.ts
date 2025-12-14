@@ -13,6 +13,7 @@ import { Article } from "../../core/services/news.service";
 export class NewsDetailComponent implements OnInit {
   article: Article | null = null;
   loading: boolean = true;
+  private readonly DEFAULT_IMAGE_URL = "assets/placeholder.svg";
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -44,11 +45,14 @@ export class NewsDetailComponent implements OnInit {
   }
 
   getImageUrl(url: string | null): string {
-    return url || "assets/placeholder.svg";
+    return url || this.DEFAULT_IMAGE_URL;
   }
 
   onImageError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
-    imgElement.src = "assets/placeholder.svg";
+    // Prevent infinite loop by checking if already set to placeholder
+    if (imgElement.src.indexOf(this.DEFAULT_IMAGE_URL) === -1) {
+      imgElement.src = this.DEFAULT_IMAGE_URL;
+    }
   }
 }
