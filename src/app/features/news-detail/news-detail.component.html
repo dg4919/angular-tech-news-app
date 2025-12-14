@@ -46,12 +46,13 @@
       </header>
 
       <!-- Featured Image -->
-      <div class="article-image-container mb-4" *ngIf="article.urlToImage">
+      <div class="article-image-container mb-4">
         <img
-          [src]="article.urlToImage"
+          [src]="getImageUrl(article.urlToImage)"
           alt="{{ article.title }}"
           class="img-fluid rounded-lg shadow"
-          loading="lazy" />
+          loading="lazy"
+          (error)="onImageError($event)" />
       </div>
 
       <!-- Description -->
