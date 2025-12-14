@@ -19,10 +19,15 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     // Load saved theme preference from localStorage
-    const savedTheme = localStorage.getItem(this.THEME_KEY);
-    if (savedTheme === 'dark') {
-      this.darkMode = true;
-      document.body.classList.add('dark-mode');
+    try {
+      const savedTheme = localStorage.getItem(this.THEME_KEY);
+      if (savedTheme === 'dark') {
+        this.darkMode = true;
+        document.body.classList.add('dark-mode');
+      }
+    } catch (e) {
+      // localStorage may not be available in SSR or private browsing mode
+      console.warn('Unable to access localStorage:', e);
     }
   }
 
@@ -31,7 +36,12 @@ export class HeaderComponent implements OnInit {
     document.body.classList.toggle("dark-mode", this.darkMode);
     
     // Persist theme preference to localStorage
-    localStorage.setItem(this.THEME_KEY, this.darkMode ? 'dark' : 'light');
+    try {
+      localStorage.setItem(this.THEME_KEY, this.darkMode ? 'dark' : 'light');
+    } catch (e) {
+      // localStorage.setItem can fail in private browsing or when quota is exceeded
+      console.warn('Unable to save theme preference:', e);
+    }
   }
 
   toggleMobileMenu() {
