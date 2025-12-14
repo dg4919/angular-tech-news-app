@@ -50,8 +50,9 @@ export class NewsDetailComponent implements OnInit {
 
   onImageError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
-    // Prevent infinite loop by checking if already set to placeholder
-    if (!imgElement.src.endsWith(this.DEFAULT_IMAGE_URL)) {
+    // Prevent infinite loop by checking if already attempted to load placeholder
+    if (!imgElement.dataset['fallback']) {
+      imgElement.dataset['fallback'] = 'true';
       imgElement.src = this.DEFAULT_IMAGE_URL;
     }
   }
