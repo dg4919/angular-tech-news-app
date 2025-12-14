@@ -19,6 +19,7 @@ body {
     background-color: #f8f9fa;
     color: #333;
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1,
@@ -147,6 +148,43 @@ body.dark-mode .navbar,
 body.dark-mode .bg-light {
     background-color: #2d2d2d !important;
     color: #e0e0e0 !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .news-item {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+}
+
+body.dark-mode a {
+    color: #5ba3ff;
+}
+
+body.dark-mode a:hover {
+    color: #7bb9ff;
+}
+
+body.dark-mode .nav-link {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .nav-link:hover,
+body.dark-mode .nav-link.active {
+    color: #5ba3ff !important;
+    background-color: #3a3a3a;
+}
+
+body.dark-mode .dropdown-menu {
+    background-color: #2d2d2d;
+}
+
+body.dark-mode .dropdown-item {
+    color: #e0e0e0;
+}
+
+body.dark-mode .dropdown-item:hover {
+    background-color: #3a3a3a;
+    color: #5ba3ff;
 }
 
 /* Responsive Typography */
@@ -221,7 +259,7 @@ a:focus-visible {
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    transition: transform 0.2s;
+    transition: transform 0.2s, background-color 0.3s ease, color 0.3s ease;
 }
 
 .news-item:hover {
