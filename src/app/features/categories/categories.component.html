@@ -1,0 +1,96 @@
+<div class="categories-container py-5">
+  <div class="container">
+    <!-- Page Title -->
+    <h2 class="mb-5 page-title">
+      <i class="bi bi-folder"></i> News Categories
+    </h2>
+
+    <!-- Categories Grid -->
+    <div class="row categories-grid mb-5">
+      <div class="col-md-4 col-lg-2 mb-3" *ngFor="let category of categories">
+        <button
+          class="category-card w-100"
+          [class.active]="selectedCategory === category.id"
+          (click)="selectCategory(category.id)">
+          <i [class]="'bi ' + category.icon"></i>
+          <span class="category-name">{{ category.name }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Selected Category Title -->
+    <div class="mb-5 border-bottom pb-3">
+      <h3>
+        Latest News in
+        <span class="text-primary">{{
+          getCategoryName(selectedCategory)
+        }}</span>
+      </h3>
+    </div>
+
+    <!-- Error Message -->
+    <div
+      *ngIf="error"
+      class="alert alert-danger alert-dismissible fade show"
+      role="alert">
+      <i class="bi bi-exclamation-triangle-fill"></i> {{ error }}
+    </div>
+
+    <!-- Loading Skeleton -->
+    <div class="row" *ngIf="loading">
+      <div class="col-md-6 col-lg-4 mb-4" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+        <div class="card skeleton-card">
+          <div class="skeleton skeleton-image"></div>
+          <div class="card-body">
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text short"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- News Grid -->
+    <div class="row" *ngIf="!loading && newsArticles.length > 0">
+      <div class="col-md-6 col-lg-4 mb-4" *ngFor="let article of newsArticles">
+        <div class="card news-card h-100 shadow-sm hover-shadow">
+          <div class="card-image-wrapper overflow-hidden">
+            <img
+              [src]="getImageUrl(article.urlToImage)"
+              class="card-img-top"
+              alt="{{ article.title }}"
+              loading="lazy" />
+            <div class="image-overlay"></div>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <small class="text-muted mb-2">
+              <i class="bi bi-calendar-event"></i>
+              {{ article.publishedAt | date : "mediumDate" }}
+            </small>
+            <h5 class="card-title">{{ article.title }}</h5>
+            <p class="card-text flex-grow-1">
+              {{ getTruncatedText(article.description, 120) }}
+            </p>
+            <small class="text-muted mb-3">
+              <i class="bi bi-building"></i> {{ article.source.name }}
+            </small>
+            <a
+              [href]="article.url"
+              target="_blank"
+              class="btn btn-primary btn-sm align-self-start">
+              Read More <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Results -->
+    <div *ngIf="!loading && newsArticles.length === 0" class="text-center py-5">
+      <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc"></i>
+      <h4 class="mt-3">No News Found</h4>
+      <p class="text-muted">
+        No articles available for this category yet. Try another category.
+      </p>
+    </div>
+  </div>
+</div>

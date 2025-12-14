@@ -1,0 +1,134 @@
+<div class="news-detail-container py-5">
+  <div class="container">
+    <!-- Back Button -->
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#" (click)="goBack()">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Article</li>
+      </ol>
+    </nav>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-3">Loading article...</p>
+    </div>
+
+    <!-- Article Content -->
+    <article *ngIf="!loading && article" class="article-wrapper">
+      <!-- Header -->
+      <header class="article-header mb-4">
+        <h1 class="article-title mb-3">{{ article.title }}</h1>
+
+        <div
+          class="article-meta d-flex flex-wrap gap-3 align-items-center border-bottom pb-3">
+          <div>
+            <small class="text-muted">
+              <i class="bi bi-calendar-event"></i>
+              {{ article.publishedAt | date : "fullDate" }}
+            </small>
+          </div>
+          <div>
+            <small class="text-muted">
+              <i class="bi bi-building"></i>
+              {{ article.source.name }}
+            </small>
+          </div>
+          <div *ngIf="article.author">
+            <small class="text-muted">
+              <i class="bi bi-person"></i>
+              {{ article.author }}
+            </small>
+          </div>
+        </div>
+      </header>
+
+      <!-- Featured Image -->
+      <div class="article-image-container mb-4" *ngIf="article.urlToImage">
+        <img
+          [src]="article.urlToImage"
+          alt="{{ article.title }}"
+          class="img-fluid rounded-lg shadow"
+          loading="lazy" />
+      </div>
+
+      <!-- Description -->
+      <div class="lead mb-4" *ngIf="article.description">
+        <p class="fs-5 text-muted">{{ article.description }}</p>
+      </div>
+
+      <!-- Content -->
+      <div class="article-content mb-4">
+        <p *ngIf="article.content" class="lh-lg">{{ article.content }}</p>
+        <p *ngIf="!article.content" class="text-muted">
+          Full content is available on the original source. Please visit the
+          link below to read the complete article.
+        </p>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="article-footer bg-light p-4 rounded-lg mb-4">
+        <p class="mb-3">
+          <strong>Want to read the full article?</strong> Visit the original
+          source to get the complete story.
+        </p>
+        <a
+          [href]="article.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-primary btn-lg">
+          <i class="bi bi-box-arrow-up-right"></i> Read Full Article
+        </a>
+      </div>
+
+      <!-- Share Section -->
+      <div class="share-section py-4 border-top">
+        <h6 class="mb-3">Share This Article</h6>
+        <div class="d-flex gap-2">
+          <button
+            class="btn btn-outline-primary btn-sm"
+            title="Share on Twitter">
+            <i class="bi bi-twitter"></i>
+          </button>
+          <button
+            class="btn btn-outline-primary btn-sm"
+            title="Share on Facebook">
+            <i class="bi bi-facebook"></i>
+          </button>
+          <button
+            class="btn btn-outline-primary btn-sm"
+            title="Share on LinkedIn">
+            <i class="bi bi-linkedin"></i>
+          </button>
+          <button
+            class="btn btn-outline-primary btn-sm"
+            (click)="goBack()"
+            title="Copy Link">
+            <i class="bi bi-link"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Back Button -->
+      <div class="mt-5">
+        <button class="btn btn-secondary" (click)="goBack()">
+          <i class="bi bi-arrow-left"></i> Back to News List
+        </button>
+      </div>
+    </article>
+
+    <!-- No Article Found -->
+    <div *ngIf="!loading && !article" class="text-center py-5">
+      <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc"></i>
+      <h4 class="mt-3">Article Not Found</h4>
+      <p class="text-muted">
+        The article you're looking for is no longer available.
+      </p>
+      <button class="btn btn-primary mt-3" (click)="goBack()">
+        <i class="bi bi-arrow-left"></i> Go Back
+      </button>
+    </div>
+  </div>
+</div>

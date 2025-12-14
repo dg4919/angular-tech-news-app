@@ -1,0 +1,150 @@
+<div class="news-list-container py-5">
+  <div class="container">
+    <!-- Featured Carousel Section -->
+    <div
+      class="featured-section mb-5"
+      *ngIf="newsArticles.length > 0 && !searchQuery">
+      <h2 class="mb-4"><i class="bi bi-star-fill"></i> Featured News</h2>
+      <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div
+            class="carousel-item active"
+            *ngFor="let article of newsArticles.slice(0, 3); let i = index"
+            [class.active]="i === 0">
+            <img
+              [src]="getImageUrl(article.urlToImage)"
+              class="d-block w-100 carousel-image"
+              alt="{{ article.title }}" />
+            <div
+              class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-4">
+              <h3>{{ article.title }}</h3>
+              <p>{{ getTruncatedText(article.description, 150) }}</p>
+              <small class="text-muted">{{
+                article.publishedAt | date : "mediumDate"
+              }}</small>
+            </div>
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#featuredCarousel"
+          data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#featuredCarousel"
+          data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Page Title -->
+    <div class="mb-5">
+      <h2 *ngIf="!searchQuery" class="mb-4">
+        <i class="bi bi-newspaper"></i> Latest Technology News
+      </h2>
+      <h2 *ngIf="searchQuery" class="mb-4">
+        Search Results for "{{ searchQuery }}"
+      </h2>
+    </div>
+
+    <!-- Error Message -->
+    <div
+      *ngIf="error"
+      class="alert alert-danger alert-dismissible fade show"
+      role="alert">
+      <i class="bi bi-exclamation-triangle-fill"></i> {{ error }}
+    </div>
+
+    <!-- Loading Skeleton -->
+    <div class="row" *ngIf="loading">
+      <div class="col-md-6 col-lg-4 mb-4" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+        <div class="card skeleton-card">
+          <div class="skeleton skeleton-image"></div>
+          <div class="card-body">
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text short"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- News Grid -->
+    <div class="row" *ngIf="!loading && newsArticles.length > 0">
+      <div class="col-md-6 col-lg-4 mb-4" *ngFor="let article of newsArticles">
+        <div class="card news-card h-100 shadow-sm hover-shadow">
+          <div class="card-image-wrapper overflow-hidden">
+            <img
+              [src]="getImageUrl(article.urlToImage)"
+              class="card-img-top"
+              alt="{{ article.title }}"
+              loading="lazy" />
+            <div class="image-overlay"></div>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <small class="text-muted mb-2">
+              <i class="bi bi-calendar-event"></i>
+              {{ article.publishedAt | date : "mediumDate" }}
+            </small>
+            <h5 class="card-title">{{ article.title }}</h5>
+            <p class="card-text flex-grow-1">
+              {{ getTruncatedText(article.description, 120) }}
+            </p>
+            <small class="text-muted mb-3">
+              <i class="bi bi-building"></i> {{ article.source.name }}
+            </small>
+            <a
+              [href]="article.url"
+              target="_blank"
+              class="btn btn-primary btn-sm align-self-start">
+              Read More <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Results -->
+    <div *ngIf="!loading && newsArticles.length === 0" class="text-center py-5">
+      <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc"></i>
+      <h4 class="mt-3">No News Found</h4>
+      <p class="text-muted">
+        Try adjusting your search query or browse our latest articles.
+      </p>
+    </div>
+
+    <!-- Pagination -->
+    <nav
+      aria-label="Page navigation"
+      *ngIf="!loading && newsArticles.length > 0"
+      class="mt-5">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button
+            class="page-link"
+            (click)="previousPage()"
+            [disabled]="currentPage === 1">
+            <i class="bi bi-chevron-left"></i> Previous
+          </button>
+        </li>
+        <li class="page-item active">
+          <span class="page-link">Page {{ currentPage }}</span>
+        </li>
+        <li
+          class="page-item"
+          [class.disabled]="currentPage * pageSize >= totalResults">
+          <button
+            class="page-link"
+            (click)="nextPage()"
+            [disabled]="currentPage * pageSize >= totalResults">
+            Next <i class="bi bi-chevron-right"></i>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
