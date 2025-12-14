@@ -42,4 +42,13 @@ export class NewsDetailComponent implements OnInit {
   goBack(): void {
     this.router.navigate(["/home"]);
   }
+
+  getImageUrl(url: string | null): string {
+    return url || "assets/placeholder.svg";
+  }
+
+  onImageError(event: Event): void {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = "assets/placeholder.svg";
+  }
 }

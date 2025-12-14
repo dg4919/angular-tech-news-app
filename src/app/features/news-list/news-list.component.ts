@@ -115,6 +115,11 @@ export class NewsListComponent implements OnInit {
   }
 
   getImageUrl(url: string | null): string {
-    return url || "assets/placeholder.png";
+    return url || "assets/placeholder.svg";
+  }
+
+  onImageError(event: Event): void {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = "assets/placeholder.svg";
   }
 }
