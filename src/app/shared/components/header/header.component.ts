@@ -24,6 +24,9 @@ export class HeaderComponent implements OnInit {
       if (savedTheme === 'dark') {
         this.darkMode = true;
         document.body.classList.add('dark-mode');
+      } else if (savedTheme === 'light') {
+        this.darkMode = false;
+        document.body.classList.remove('dark-mode');
       }
     } catch (e) {
       // localStorage may not be available in SSR or private browsing mode
