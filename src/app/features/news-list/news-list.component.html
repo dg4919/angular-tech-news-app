@@ -14,13 +14,14 @@
             <img
               [src]="getImageUrl(article.urlToImage)"
               class="d-block w-100 carousel-image"
-              alt="{{ article.title }}" />
+              alt="{{ article.title }}"
+              (error)="onImageError($event)" />
             <div
               class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-4">
               <h3>{{ article.title }}</h3>
               <p>{{ getTruncatedText(article.description, 150) }}</p>
               <small class="text-muted">{{
-                article.publishedAt | date : "mediumDate"
+                article.publishedAt | date: "mediumDate"
               }}</small>
             </div>
           </div>
@@ -82,13 +83,14 @@
               [src]="getImageUrl(article.urlToImage)"
               class="card-img-top"
               alt="{{ article.title }}"
-              loading="lazy" />
+              loading="lazy"
+              (error)="onImageError($event)" />
             <div class="image-overlay"></div>
           </div>
           <div class="card-body d-flex flex-column">
             <small class="text-muted mb-2">
               <i class="bi bi-calendar-event"></i>
-              {{ article.publishedAt | date : "mediumDate" }}
+              {{ article.publishedAt | date: "mediumDate" }}
             </small>
             <h5 class="card-title">{{ article.title }}</h5>
             <p class="card-text flex-grow-1">
@@ -97,12 +99,16 @@
             <small class="text-muted mb-3">
               <i class="bi bi-building"></i> {{ article.source.name }}
             </small>
-            <a
-              [href]="article.url"
-              target="_blank"
-              class="btn btn-primary btn-sm align-self-start">
+            <button
+              mat-flat-button
+              (click)="openArticle(article.url)"
+              style="
+                --mdc-filled-button-container-color: #e91e8c;
+                --mdc-filled-button-label-text-color: #fff;
+              "
+              class="align-self-start">
               Read More <i class="bi bi-arrow-right"></i>
-            </a>
+            </button>
           </div>
         </div>
       </div>

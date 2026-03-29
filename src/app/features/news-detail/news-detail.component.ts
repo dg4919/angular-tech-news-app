@@ -13,6 +13,7 @@ import { Article } from "../../core/services/news.service";
 export class NewsDetailComponent implements OnInit {
   article: Article | null = null;
   loading: boolean = true;
+  private readonly DEFAULT_IMAGE_URL = "assets/placeholder.svg";
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -41,5 +42,18 @@ export class NewsDetailComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(["/home"]);
+  }
+
+  getImageUrl(url: string | null): string {
+    return url || this.DEFAULT_IMAGE_URL;
+  }
+
+  onImageError(event: Event): void {
+    const imgElement = event.target as HTMLImageElement;
+    // Prevent infinite loop by checking if already attempted to load placeholder
+    if (!imgElement.dataset['fallback']) {
+      imgElement.dataset['fallback'] = 'true';
+      imgElement.src = this.DEFAULT_IMAGE_URL;
+    }
   }
 }

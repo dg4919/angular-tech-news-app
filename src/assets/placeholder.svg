@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#e9ecef"/>
+  <g transform="translate(400, 300)">
+    <!-- Camera Icon -->
+    <path d="M-80-60 L-60-80 L60-80 L80-60 L80,60 L-80,60 Z" fill="#adb5bd" stroke="#6c757d" stroke-width="4"/>
+    <circle cx="0" cy="10" r="35" fill="#6c757d"/>
+    <circle cx="0" cy="10" r="25" fill="#495057"/>
+    <rect x="-60" y="-60" width="40" height="20" rx="5" fill="#6c757d"/>
+    <circle cx="50" cy="-40" r="8" fill="#ffc107"/>
+  </g>
+  <text x="400" y="420" font-family="Arial, sans-serif" font-size="24" fill="#6c757d" text-anchor="middle" font-weight="500">
+    No Image Available
+  </text>
+</svg>
